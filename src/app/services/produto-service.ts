@@ -1,3 +1,4 @@
+import { ProdutoModel } from './../models/produtoModel';
 import { inject, Injectable } from '@angular/core';
 import { ProdutoModel } from '../models/produtoModel';
 import { catchError, Observable, throwError } from 'rxjs';
@@ -17,11 +18,21 @@ export class ProdutoService {
       pipe(catchError(this.handle));
   }
 
-  // adicionar(nome: string): ProdutoModel{
-  // }
+  adicionar(produto: ProdutoModel): Observable<ProdutoModel>{
+    return this.http
+    .post<ProdutoModel>(`${this.base}/salvar`, produto)
+    .pipe(catchError(this.handle));
+  }
 
-  // remover(id: number): void{
-  // }
+  remover(id : string): Observable<string>{
+    return this.http.post(`${this.base}/apagar/${id}`, null,
+      {responseType: 'text'}).pipe(catchError(this.handle));
+  }
+
+  editar(id: string, produto: ProdutoModel): Observable<ProdutoModel>{
+    return this.http.post<ProdutoModel>(`${this.base}/editar/${id}`, produto)
+    .pipe(catchError(this.handle));
+  }
 
     private handle(err: HttpErrorResponse){
       const msg = err.error?.message || err.error?.erro || err.message || 'Erro inesperado';

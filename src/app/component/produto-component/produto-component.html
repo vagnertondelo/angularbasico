@@ -2,6 +2,7 @@
 
 @if (loading) {<div class="alert alert-info"> Carregando</div>}
 @if (erro) {<div class="alert alert-danger"> {{erro}}</div>}
+@if (sucesso) {<div class="alert alert-success"> {{sucesso}}</div>}
 
 <div class="row g-2 align-items-center mb-3">
     <div class="col-sm-6 col-md-4">
@@ -9,18 +10,28 @@
                       [(ngModel)]="novoNome"
                       placeholder="Nome do produto" >
     </div>
+    <div class="col-sm-6 col-md-4">
+        <input class="form-control" type="number"
+                      [(ngModel)]="novoPreco"
+                      placeholder="Preço do produto" >
+    </div>
+    <div class="col-sm-6 col-md-4">
+        <input class="form-control"
+                      [(ngModel)]="novoDescricao"
+                      placeholder="Descrição do produto" >
+    </div>
     <div class="col-auto">
-        <!-- <button class="btn btn-primary" (click)="adicionar()">Adicionar</button> -->
+        <button class="btn btn-primary" (click)="adicionar()">Adicionar</button>
     </div>
 </div>
 <ul class="list-group mb-3">
     @for (p of produtos; track p.id) {
         <li class="list-group-item d-flex justify-content-between
         align-items-center">
-            <span>{{p.nome}} - {{'R$ '+ p.preco.toFixed(2)}} - 
+            <span>{{p.nome}} - {{'R$ '+ p.preco.toFixed(2)}} -
               {{p.descricao}}</span>
-            <!-- <button class="btn btn-sm btn-outline-danger"
-                (click)="remover(p.id)">Remover</button> -->
+            <button class="btn btn-sm btn-outline-danger"
+                (click)="remover(p.id)">Remover</button>
         </li>
     }
 </ul>
