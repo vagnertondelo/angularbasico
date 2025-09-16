@@ -15,6 +15,9 @@ export class ProdutoComponent implements OnInit {
   private service = inject(ProdutoService);
 
   produtos: ProdutoModel[]=[];
+
+  editarItem: ProdutoModel | null = null;
+
   novoNome = '';
   novoPreco = '';
   novoDescricao = '';
@@ -99,10 +102,23 @@ export class ProdutoComponent implements OnInit {
         }
       })
     }
-
-
-
-
-
+    salvarEdicao(){
+        if (!this.editarItem?.id) {
+          return;
+        }
+        this.loading = true;
+        this.service.editar(this.editarItem.id, this.editarItem).subscribe({
+          next: result =>{
+            if(result){
+              this.carregar();
+              this.sucesso ='Produto atualizado com sucesso';
+              setTimeout(()=> this.sucesso = '' , 3000);
+            }
+          },
+          error: e =>{
+            this.erro = e.message || 'Falha ao editar';
+          }
+        });
+    }
 
 }

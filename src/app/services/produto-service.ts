@@ -1,4 +1,4 @@
-import { ProdutoModel } from './../models/produtoModel';
+
 import { inject, Injectable } from '@angular/core';
 import { ProdutoModel } from '../models/produtoModel';
 import { catchError, Observable, throwError } from 'rxjs';

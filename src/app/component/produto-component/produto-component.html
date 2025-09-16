@@ -30,8 +30,19 @@
         align-items-center">
             <span>{{p.nome}} - {{'R$ '+ p.preco.toFixed(2)}} -
               {{p.descricao}}</span>
-            <button class="btn btn-sm btn-outline-danger"
+
+              <div class="d-flex align-items-center gap-2">
+
+                <button class="btn btn-sm btn-warning"
+                  data-bs-toggle="modal"
+                  data-bs-target="#editModal"
+                  (click)="editarItem = p"
+                >Editar</button>
+
+                 <button class="btn btn-sm btn-outline-danger"
                 (click)="remover(p.id)">Remover</button>
+              </div>
+
         </li>
     }
 </ul>
@@ -40,3 +51,36 @@
   <div class="alert alert-info"> Nenhum produto cadastrado</div>
 }
 
+<!-- Modal em Bootstrap -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true" >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @if (editarItem) {
+              <div class="modal-header">
+                  <h4 class="modal-title"> Editar Produto</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+              </div>
+
+              <div class="modal-body">
+                  <input class="form-control mb-2"  [(ngModel)] = "editarItem.nome"
+                  placeholder="Nome"/>
+
+                  <input class="form-control mb-2"  [(ngModel)] = "editarItem.preco" type="number"
+                  placeholder="Preço"/>
+
+                  <input class="form-control mb-2"  [(ngModel)] = "editarItem.descricao"
+                  placeholder="Descrição"/>
+              </div>
+
+              <div class="modal-footer">
+                  <button class="btn btn-secondary" data-bs-dismiss="modal">
+                    Cancelar</button>
+                   <button class="btn btn-primary" (click)="salvarEdicao()"
+                   data-bs-dismiss="modal">
+                    Salvar</button>
+              </div>
+
+            }
+        </div>
+    </div>
+</div>
